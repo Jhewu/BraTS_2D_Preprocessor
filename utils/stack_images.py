@@ -38,7 +38,8 @@ def Main():
     for mod in MODALITY:
         mod_to_combine.append(f"{IN_DIR}/{mod}_{DATASET}/images")
 
-    split_list = ["test", "train", "val"]
+    # split_list = ["test", "train", "val"]
+    split_list = os.listdir(mod_to_combine[0])
     for split in split_list:
         mod0 = os.path.join(mod_to_combine[0], split)
         mod0_list = os.listdir(mod0)
