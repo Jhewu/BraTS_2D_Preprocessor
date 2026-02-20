@@ -54,3 +54,6 @@ This repository provides a set of utility scripts to preprocess 3D `.nii.gz` Bra
    conda activate brats
     ```
 
+## Remaining Tasks
+1. Reword in_dir parameter to root_dir because it's misleading. 
+2. Combine process_yoloseg.sh into process_segmentation_kfold.sh and process_segmentation_detection.sh + Remove process_yoloseg.sh

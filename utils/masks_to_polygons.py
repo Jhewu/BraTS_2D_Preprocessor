@@ -87,23 +87,32 @@ def Main():
 
         # -----------------------------------------------------------
 
-        # mask to polygons on 1st directory
-        with ThreadPoolExecutor(max_workers=WORKERS) as executor:
-            input_dir = os.path.join(gt_dir, gt_dir_list[0])        
-            output_dir = os.path.join(dest_label_dir, gt_dir_list[0])
-            executor.submit(MaskToPolygons2, input_dir, output_dir)
+        for i in range( len(gt_dir_list) ):
+            with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+                input_dir = os.path.join(gt_dir, gt_dir_list[i])        
+                output_dir = os.path.join(dest_label_dir, gt_dir_list[i])
+                executor.submit(MaskToPolygons2, input_dir, output_dir)
 
-        # mask to polygons on 1st directory
-        with ThreadPoolExecutor(max_workers=WORKERS) as executor:
-            input_dir = os.path.join(gt_dir, gt_dir_list[1])       
-            output_dir = os.path.join(dest_label_dir, gt_dir_list[1]) 
-            executor.submit(MaskToPolygons2, input_dir, output_dir)
-
-        # mask to polygons on 1st directory
-        with ThreadPoolExecutor(max_workers=WORKERS) as executor:
-            input_dir = os.path.join(gt_dir, gt_dir_list[2])   
-            output_dir = os.path.join(dest_label_dir, gt_dir_list[2])     
-            executor.submit(MaskToPolygons2, input_dir, output_dir)
+        ### ----------------------------------------------------------- ###
+        ### AVOID HARD CODING
+#         # mask to polygons on 1st directory
+#         with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+#             input_dir = os.path.join(gt_dir, gt_dir_list[0])        
+#             output_dir = os.path.join(dest_label_dir, gt_dir_list[0])
+#             executor.submit(MaskToPolygons2, input_dir, output_dir)
+# 
+#         # mask to polygons on 1st directory
+#         with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+#             input_dir = os.path.join(gt_dir, gt_dir_list[1])       
+#             output_dir = os.path.join(dest_label_dir, gt_dir_list[1]) 
+#             executor.submit(MaskToPolygons2, input_dir, output_dir)
+# 
+#         # mask to polygons on 1st directory
+#         with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+#             input_dir = os.path.join(gt_dir, gt_dir_list[2])   
+#             output_dir = os.path.join(dest_label_dir, gt_dir_list[2])     
+#             executor.submit(MaskToPolygons2, input_dir, output_dir)
+        ### ----------------------------------------------------------- ###
 
 if __name__ == "__main__": 
     # ------------------------------------------------------------------
