@@ -27,23 +27,22 @@ This repository provides a set of utility scripts to preprocess 3D `.nii.gz` Bra
 
 3. **Make the Script Executable:**
    ```bash
-   chmod +x process_segmentation_detection.sh
-   chmod +x process_yoloseg.sh
+   chmod +x process_all.sh
+   chmod +x process_all_kfold.sh
     ```
 4. **Set the Dataset Directory:**
-   - Open `process_segmentation_detection.sh` (or `process_yoloseg.sh`) and update the `--in_dir` variable to point to your BraTS dataset directory.
+   - Open `process_all.sh` (or `process_all_kfold.sh`) and update the `--in_dir` variable to point to your BraTS dataset directory and comment or uncomment dataset section (to include in process or  not)
    - Alternatively, you can specify the dataset directory directly as a command-line argument.
-   - Please review the bash commands and the comments, if you want to train a single modality and not stacked modality. `process_segmentation_detection.sh` processes the dataset for U-Net segmentation, YOLO object detection, while `process_yoloseg.sh`processes the dataset for YOLO segmentation. 
+   - Please review the bash commands and the comments, if you want to train a single modality and not stacked modality. `process_all.sh` processes the dataset for UNet segmentation, YOLO object detection, and YOLO object segmentation. While `process_all_kfold` creates `K` folds based on the `K` parameter in the bash file (User can change)
    
 5. **Run the Preprocessing Script:**
    ```bash
-   ./process_segmentation_detection.sh
+   ./process_all.sh
     ```
-    - This will generate 2 directories (U-Net segmentation, YOLO object detection format), and remove all temporary directories, ensure your system have enough storage
+    
    ```bash
-   ./process_yoloseg.sh
+   ./process_all_kfold.sh
     ```
-    - This will generate 1 directories (YOLO segmentation format), and remove all temporary directories, ensure your system have enough storage
 
 ## Requirements
 1. Create a new conda environment and install the requirements
@@ -54,3 +53,7 @@ This repository provides a set of utility scripts to preprocess 3D `.nii.gz` Bra
    conda activate brats
     ```
 
+## Remaining Tasks
+1. Reword `in_dir` parameter to root_dir because it's misleading. 
+2. Add `process_yoloseg.sh` into `process_all.sh`
+3. Review if `process_all.sh` still work + update the README.md

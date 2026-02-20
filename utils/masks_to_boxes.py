@@ -49,7 +49,8 @@ def WriteYOLOAnnotations(output_path, image_name, objects_info):
     image_name = os.path.basename(image_name).split(".")[0]
     image_name = f"{image_name}.txt"
     annotation_file_path = os.path.join(output_path, image_name)
-    print(f"\nThis is annotation file {annotation_file_path}")
+    if VERBOSE: 
+        print(f"\nThis is annotation file {annotation_file_path}")
 
     with open(annotation_file_path, "w") as file:
         for obj_info in objects_info:
@@ -68,9 +69,10 @@ def MaskToYOLO(dir_to_examine, output_dir):
 
         # Convert mask to YOLO format
         chords = ProcessMask(mask_path)
-        if not chords: 
-            print(f"No polygons found for {mask}")
-        else: print(chords)
+        if VERBOSE:
+            if not chords: 
+                print(f"No polygons found for {mask}")
+            else: print(chords)
 
         WriteYOLOAnnotations(output_dir, mask, chords)
             
@@ -86,22 +88,30 @@ def Main():
         gt_dir_list = os.listdir(gt_dir)
 
         # mask to polygons on test directory 
-        with ThreadPoolExecutor(max_workers=WORKERS) as executor:
-            input_dir = os.path.join(gt_dir, gt_dir_list[0])        
-            output_dir = os.path.join(dest_label_dir, gt_dir_list[0])
-            executor.submit(MaskToYOLO, input_dir, output_dir)
+        for i in range( len(gt_dir_list) ):
+            with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+                input_dir = os.path.join(gt_dir, gt_dir_list[i])        
+                output_dir = os.path.join(dest_label_dir, gt_dir_list[i])
+                executor.submit(MaskToYOLO, input_dir, output_dir)
 
-        # mask to polygons on train directory
-        with ThreadPoolExecutor(max_workers=WORKERS) as executor:
-            input_dir = os.path.join(gt_dir, gt_dir_list[1])       
-            output_dir = os.path.join(dest_label_dir, gt_dir_list[1]) 
-            executor.submit(MaskToYOLO, input_dir, output_dir)
-
-        # mask to polygons on val directory
-        with ThreadPoolExecutor(max_workers=WORKERS) as executor:
-            input_dir = os.path.join(gt_dir, gt_dir_list[2])   
-            output_dir = os.path.join(dest_label_dir, gt_dir_list[2])     
-            executor.submit(MaskToYOLO, input_dir, output_dir)
+        ### -------------------------------- ###
+#         with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+#             input_dir = os.path.join(gt_dir, gt_dir_list[0])        
+#             output_dir = os.path.join(dest_label_dir, gt_dir_list[0])
+#             executor.submit(MaskToYOLO, input_dir, output_dir)
+# 
+#         # mask to polygons on train directory
+#         with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+#             input_dir = os.path.join(gt_dir, gt_dir_list[1])       
+#             output_dir = os.path.join(dest_label_dir, gt_dir_list[1]) 
+#             executor.submit(MaskToYOLO, input_dir, output_dir)
+# 
+#         # mask to polygons on val directory
+#         with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+#             input_dir = os.path.join(gt_dir, gt_dir_list[2])   
+#             output_dir = os.path.join(dest_label_dir, gt_dir_list[2])     
+#             executor.submit(MaskToYOLO, input_dir, output_dir)
+        ### -------------------------------- ###
 
 if __name__ == "__main__": 
     # -------------------------------------------------------------
@@ -118,6 +128,7 @@ if __name__ == "__main__":
     parser.add_argument('--out_dir',type=str,help='output directory prefix\t[None]')
     parser.add_argument('--modality', type=str, choices=MODALITY, nargs='+', help=f'BraTS dataset modalities to use\t[t1c, t1n, t2f, t2w]')
     parser.add_argument('--workers', type=int, help='number of threads/workers to use\t[10]')
+    parser.add_argument('--verbose', type=int, help='1 if verbose, 0 to disable\t[1]')
     args = parser.parse_args()
 
     if args.in_dir is not None:
@@ -131,6 +142,10 @@ if __name__ == "__main__":
     else: WORKERS = 10
     if args.modality is not None:
         MODALITY = [mod for mod in args.modality]
+    if args.verbose is not None: 
+        VERBOSE = args.verbose
+    else: 
+        VERBOSE = 1
 
     Main()
     print("\nFinish converting binary mask to boxes, please check your directory")

@@ -93,7 +93,7 @@ if __name__ == "__main__":
     IN_DIR = args.in_dir
     OUT_DIR = args.out_dir or "dataset_split"
     SEED = args.seed or 42
-    K = args.k or 4
+    K = args.k or 3
 
     SplitKFoldDataset()
     print("\nFinish splitting the k-fold cross-validation dataset, please check your directory...\n")

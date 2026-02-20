@@ -20,7 +20,7 @@ def CopyTree(src, dst):
 
 def CopyLabels(): 
     input_folder = f"{IN_DIR}/t1c_{DATASET}/labels"
-    dest_folder = f"{OUT_DIR}/stacked_{DATASET}/labels"
+    dest_folder = f"{OUT_DIR}/labels"
     CreateDir(dest_folder)
     with ThreadPoolExecutor(max_workers=WORKERS) as executor:
             executor.submit(CopyTree, input_folder, dest_folder)
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     else: IN_DIR = "."
     if args.out_dir is not None:
         OUT_DIR = args.out_dir
-    else: OUT_DIR = "."
+    else: OUT_DIR = f"stacked_{DATASET}"
     if args.workers is not None:
         WORKERS = args.workers
     else: WORKERS = 10
