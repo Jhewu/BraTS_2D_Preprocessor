@@ -48,7 +48,8 @@ do
 	## --- For YOLO Object Detection (COMMENT OR UNCOMMENT) --- ##
 
 	## --- For YOLO Segmentation (COMMENT OR UNCOMMENT) --- ##
-	python3 utils/masks_to_polygons.py --in_dir "output_${i}" --out_dir "output_${i}"
+	python utils/rescale_masks.py --root_dir "output_${i}" --in_dir segmentation --out_dir segmentation_rescaled
+	python3 utils/masks_to_polygons.py --root_dir "output_${i}" --in_dir segmentation_rescaled --out_dir yoloseg
 	python3 utils/copy_training_img.py --in_dir "output_${i}" --out_dir "output_${i}" --dataset_to_copy_from segmentation --dataset_to_copy_to yoloseg
 
 	python3 utils/stack_images.py --in_dir "output_${i}" --out_dir "stacked_yoloseg_${i}" --dataset yoloseg
