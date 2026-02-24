@@ -9,6 +9,7 @@
 ## directories: (1) stacked_detection, and (2) stacked_segmentation
 ## for each respective tasks (all four modalities stacked onto 
 ## each PNG channel)
+## NEEDS REVISION TO ENSURE IT FULLY RUNS
 ## -------------------------------------------------
 
 ## For UNET Segmentation

@@ -50,7 +50,6 @@ def DirectoryProcessor() -> None:
         #         input_dir = os.path.join(gt_dir, gt_dir_list[i])        
         #         output_dir = os.path.join(dest_label_dir, gt_dir_list[i])
         #         executor.submit(MaskToPolygons, input_dir, output_dir)
-
         ### ----------------------------------------------------------- ###
 
 if __name__ == "__main__": 
