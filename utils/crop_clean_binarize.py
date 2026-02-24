@@ -243,7 +243,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=des.lstrip(" "), formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("--in_dir", type=str,help='input directory of images\t[None]')
     parser.add_argument('--out_dir',type=str,help='output directory prefix\t[None]')
-    parser.add_argument('--segmentation', action="store_true", help='if for segmentation, binary mask will be [0, 1, 255], not [0, 128, 255]\t[None]')
+    parser.add_argument('--segmentation', action="store_true", help='if for segmentation, binary mask will be [0, 1, 255], not [0, 255]\t[None]')
     parser.add_argument('--modality', type=str, choices=MODALITY, nargs='+', help=f'BraTS dataset modalities to use\t[t1c, t1n, t2f, t2w]')
     parser.add_argument('--crop_size', type=int, help='final NxN image crop\t[192]')
     parser.add_argument('--threshold', type=int, help='threshold for binarizing the image\t[15]')
